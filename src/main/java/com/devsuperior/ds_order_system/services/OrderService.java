@@ -1,14 +1,18 @@
 package com.devsuperior.ds_order_system.services;
 
-import com.devsuperior.ds_order_system.entities.Order;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.devsuperior.ds_order_system.entities.Order;
 
 @Service
 public class OrderService {
+	@Autowired
+	ShippingService shippingService;
 
-    public Order total(Order order) {
-        order.setBasic(order.getBasic() * (1 - (order.getDiscount()/100)));
-        return order;
+    public double total(Order order) {
+    	return order.getBasic() * (1 - (order.getDiscount()/100)) + shippingService.shipment(order);
     }
 
+    
 }
